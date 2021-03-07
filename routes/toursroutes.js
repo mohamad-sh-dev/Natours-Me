@@ -53,9 +53,6 @@ router.get('/tours-within/:distance/center/:latlng/unit/:unit', getToursWithin)
 
 router.get('/distances/:latlng/unit/:unit', getDistances)
 
-router.patch('/:id', protect, restrictTo("admin", "lead-giude"), uploadTourPhoto, resizeTourPhoto, UpdateTour)
-
-router.delete('/:id', protect, restrictTo("admin", "lead-giude"), DeleteTour)
 
 
 
