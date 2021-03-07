@@ -25,6 +25,7 @@ const {
     protect,
     restrictTo
 } = require("../controller/secure/AuthController")
+const { get } = require("./paymentRouts")
 
 // Nested Routes 
 // /tours/a51aa54fgsrg1323/reviews
@@ -44,7 +45,7 @@ router.get('/tours-stats', stats)
 
 router.get('/top-5-tours', top5, GetTours)
 
-router.get('/:id', FindTourbyID)
+router.route('/:id').get(FindTourbyID)
 .patch(protect, restrictTo("admin", "lead-giude"), uploadTourPhoto, resizeTourPhoto, UpdateTour)
 .delete(protect, restrictTo("admin", "lead-giude"), DeleteTour)
 
