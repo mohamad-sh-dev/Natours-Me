@@ -1,0 +1,70 @@
+<main class="main">
+    <div class="user-view">
+        <nav class="user-view__menu">
+            <ul class="side-nav">
+                <li class=side-nav--active><a href="#">
+                        <svg>
+                            <use xlink:href="img/icons.svg#icon-settings"></use>
+                        </svg>Settings</a></li>
+                <li><a href="#">
+                        <svg>
+                            <use xlink:href="img/icons.svg#icon-briefcase"></use>
+                        </svg>My bookings</a></li>
+                <li><a href="#">
+                        <svg>
+                            <use xlink:href="img/icons.svg#icon-star"></use>
+                        </svg>My reviews</a></li>
+                <li><a href="#">
+                        <svg>
+                            <use xlink:href="img/icons.svg#icon-credit-card"></use>
+                        </svg>Billing</a></li>
+            </ul>
+            <% if(user.role=="admin" ) { %>
+                <div class="admin-nav">
+                    <h5 class="admin-nav__heading">Admin</h5>
+                    <ul class="side-nav">
+                        <li><a href="#">
+                                <svg>
+                                    <use xlink:href="img/icons.svg#icon-map"></use>
+                                </svg>Manage tours</a></li>
+                        <li><a href="#">
+                                <svg>
+                                    <use xlink:href="img/icons.svg#icon-users"></use>
+                                </svg>Manage users</a></li>
+                        <li><a href="#">
+                                <svg>
+                                    <use xlink:href="img/icons.svg#icon-star"></use>
+                                </svg>Manage reviews</a></li>
+                        <li><a href="#">
+                                <svg>
+                                    <use xlink:href="img/icons.svg#icon-briefcase"></use>
+                                </svg>Manage Bookings</a></li>
+                    </ul>
+                </div>
+                <% } %>
+        </nav>
+        <div class="user-view__content">
+            <h1 style="margin: 0 0 20px 80px; display: inline-block;"> Name </h1>
+
+            <h1 style="margin: 0 0 20px 80px;display: inline-block;"><a href="#"></a> Activity </h1>
+            <h1 style="margin: 0 0 20px 100px;display: inline-block;"> Email </h1>
+            <% for(let user of Users){ %>
+                <div class="user-view__form-container" style="max-width: 400rem; display: inline-block;">
+
+                    <h2 class="heading-secondary ma-bt-md" style="font-size:15px;">
+                        <%= user.name %>
+                    </h2>
+                    <div class="user-view__form-container" style="max-width: 350rem; display:inline-block;">
+                        <h2 class="heading-secondary " style="font-size:15px;display: inline-block;">
+                            <%= user.role %>
+                        </h2>
+                        <h2 class="heading-secondary " style="font-size:15px;display: inline-block; margin-left: 80px;">
+                            <%= user.active===true ? "Active" : "Not Active" %> <a id="delete" href="#"> d</a>
+                        </h2>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    </div>
+</main>

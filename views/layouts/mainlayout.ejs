@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet" />
+    <title>
+        <%= pageTitle %>
+    </title>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel='stylesheet' />
+
+
+</head>
+
+<body>
+    <%- include ("../includes/header.ejs") %>
+        <%- body %>
+            <%- include("../includes/footer.ejs") %>
+</body>
+
+<script src="/js/bundle.js"> </script>
+
+</html>
