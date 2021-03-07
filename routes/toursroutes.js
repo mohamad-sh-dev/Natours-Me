@@ -4,7 +4,7 @@ const {
 const router = Router()
 const reviewRoter = require("../routes/reviewRoutes")
 
-const { 
+const {
     monthlyPlan,
     stats,
     top5,
@@ -12,16 +12,24 @@ const {
     CreateTour,
     FindTourbyID,
     UpdateTour,
-    DeleteTour,getToursWithin,getDistances
+    DeleteTour,
+    getToursWithin,
+    getDistances
 } = require("../controller/ToursController")
 
-const {uploadTourPhoto,resizeTourPhoto} = require("../controller/photoController")
-const {protect,restrictTo} = require("../controller/secure/AuthController")
+const {
+    uploadTourPhoto,
+    resizeTourPhoto
+} = require("../controller/photoController")
+const {
+    protect,
+    restrictTo
+} = require("../controller/secure/AuthController")
 
 // Nested Routes 
 // /tours/a51aa54fgsrg1323/reviews
 
-router.use('/:tourId',reviewRoter)
+router.use('/:tourId', reviewRoter)
 
 // Desc :  Tours
 // Methods : Get / POST / PATCH 
@@ -34,15 +42,18 @@ router.get('/monthly-plan/:year', protect, monthlyPlan)
 
 router.get('/tours-stats', stats)
 
-router.get('/top-5-tours',top5, GetTours)
+router.get('/top-5-tours', top5, GetTours)
 
-router.get('/:id',FindTourbyID)
+router.get('/:id', FindTourbyID)
+.patch(protect, restrictTo("admin", "lead-giude"), uploadTourPhoto, resizeTourPhoto, UpdateTour)
+.delete(protect, restrictTo("admin", "lead-giude"), DeleteTour)
 
-router.get('/tours-within/:distance/center/:latlng/unit/:unit',getToursWithin)
 
-router.get('/distances/:latlng/unit/:unit',getDistances)
+router.get('/tours-within/:distance/center/:latlng/unit/:unit', getToursWithin)
 
-router.patch('/:id', protect, restrictTo("admin", "lead-giude"),uploadTourPhoto ,resizeTourPhoto , UpdateTour)
+router.get('/distances/:latlng/unit/:unit', getDistances)
+
+router.patch('/:id', protect, restrictTo("admin", "lead-giude"), uploadTourPhoto, resizeTourPhoto, UpdateTour)
 
 router.delete('/:id', protect, restrictTo("admin", "lead-giude"), DeleteTour)
 
