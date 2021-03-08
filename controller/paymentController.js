@@ -1,19 +1,17 @@
 const cathAsync = require("../utils/cathAsync");
 const Tour = require("../model/tourSchema")
-const stripe = require('stripe')(process.env.STRIPE_SECRETKEY)
-
-
+const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 exports.paymentTour = cathAsync(async (req, res, next) => {
     // find tour with params id 
     const tour = await Tour.findById(req.params.tourId)
-  
+    
     // create checkout sessions
-    const session = await stripe.checkout.sessions.create({
+     var session = await Stripe.checkout.sessions.create({
         // Payment Information
-        payment_method_types: ['cards'],
+        payment_method_types: ["cards"],
         success_url: `${req.protocol}://${req.get('host')}`,
-        cancel_url: `${req.protocol}://${req.get('host')}/tours/:id`,
+        cancel_url: `${req.protocol}://${req.get('host')}/tours/${tour.id}`,
         customer_email: req.user.email,
         client_refrence_id: req.params.tourId,
         // Product Information
@@ -27,13 +25,12 @@ exports.paymentTour = cathAsync(async (req, res, next) => {
                 quantity: 1
             }
 
-        ]
+        ],
     })
-    console.log(session_id);
-    console.log(session);
-
+    
+    
     res.status(200).json({
-        status:"success",
-        data : session
+        status: "success",
+        session
     })
 })

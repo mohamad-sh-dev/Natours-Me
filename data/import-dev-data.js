@@ -8,9 +8,9 @@ const Review = require('../model/reviewSchema');
 dotenv.config({
     path: "./config/config.env"
 })
-
+const DB = process.env.DATABSE.replace('<PASSWORD>',process.env.DATABASE_PASSWORD)
 mongoose
-  .connect(process.env.URI, {
+  .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false

@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema({
         required: true,
         max: 5.0,
         min: 1.0,
-        set: value => Math.round(value * 10) / 10
+        // set: value => Math.round(value * 10) / 10
         
     },
     createdAt: {

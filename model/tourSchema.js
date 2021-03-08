@@ -39,6 +39,7 @@ const tourSchema = new mongoose.Schema({
         default: 4.5,
         max: [5.0, "رتبه بندی نمی تواند بیشتر از 5.0 باشد"],
         min: [1.0, "رتبه بندی نمی تواند کمتر از 1.0 باشد"],
+        set: val => Math.round(val * 10) / 10
 
     },
     ratingsQuantity: {
@@ -97,9 +98,9 @@ const tourSchema = new mongoose.Schema({
     //Embeded Relation Between tours And Users
     //!guides:Array
     // Child Refrencing Between Tours And Users
-    guides:[{
-        type:mongoose.Schema.ObjectId,
-        ref:"User"
+    guides: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "User"
     }]
 
 }, {
@@ -111,10 +112,15 @@ const tourSchema = new mongoose.Schema({
     }
 })
 
-tourSchema.index({price: 1 , ratingsAverage : -1})
-tourSchema.index({startLocation: "2dsphere" })
+tourSchema.index({
+    price: 1,
+    ratingsAverage: -1
+})
+tourSchema.index({
+    startLocation: "2dsphere"
+})
 // Papulate Reviews For Tours (Reviews Not Saved On Database For Each Tour!!)
-tourSchema.virtual('reviews',{
+tourSchema.virtual('reviews', {
     ref: 'Reviews',
     foreignField: 'tour',
     localField: '_id'
@@ -125,10 +131,10 @@ tourSchema.virtual('durationWeeks').get(function () {
 })
 
 
-tourSchema.pre(/^find/,function(next){
+tourSchema.pre(/^find/, function (next) {
     this.populate({
-        path:"guides",
-        select:'-__v -passwordChangedAt -active'
+        path: "guides",
+        select: '-__v -passwordChangedAt -active'
     })
 
     next()
@@ -136,7 +142,7 @@ tourSchema.pre(/^find/,function(next){
 
 //! Refrence Code For Embeded Relation between Tour and Users
 //* tourSchema.pre("save" ,async function(next){
-    
+
 //*   const promissesGuide =  this.guides.map(async id => await User.findById(id))
 //*  this.guides = await Promise.all(promissesGuide)  
 //*     next()

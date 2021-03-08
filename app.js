@@ -6,6 +6,7 @@ const morgan = require("morgan")
 const DotEnv = require("dotenv")
 const exprLayyout = require("express-ejs-layouts")
 const cookieParser = require("cookie-parser")
+const bodyParser = require("body-parser")
 const rateLimit = require("express-rate-limit")
 const helmet = require("helmet")
 const mongoSanitize = require("express-mongo-sanitize")
@@ -13,13 +14,9 @@ const xss = require("xss-clean")
 const hpp = require("hpp")
 
 
+
 // start App
 const app = express()
-
-
-
-const Connectiondb = require("./config/Database");
-const ErrorGlobal = require("./controller/errorCotroller");
 
 
 //Dotenv 
@@ -27,10 +24,16 @@ DotEnv.config({
     path: "./config/config.env"
 })
 
+const Connectiondb = require("./config/Database");
+const ErrorGlobal = require("./controller/errorCotroller");
+
+
+
 //Database 
 Connectiondb()
 
 // cors (block content security policy)
+
 
 
 
@@ -57,8 +60,8 @@ app.use("/api", limiter)
 
 //body-parser
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser())
 
 //Serve Static Folder 
@@ -81,7 +84,7 @@ app.use(hpp({
 app.use("/api/v1/tours", require("./routes/toursroutes"))
 app.use("/api/v1/reviews", require("./routes/reviewRoutes"))
 app.use("/api/v1/users", require("./routes/userRoutes"))
-app.use("/api/v1/payment", require("./routes/paymentRouts"))
+app.use("/api/v1/booking", require("./routes/paymentRouts"))
 app.use("/", require('./routes/viewsRoutes'))
 
 //404 route

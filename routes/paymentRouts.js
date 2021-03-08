@@ -5,6 +5,6 @@ const authController = require("../controller/secure/AuthController")
 const payController = require("../controller/paymentController")
 
 
-router.get("/checkout-sessions/:tourId" , authController.protect ,payController.paymentTour)
+router.post("/checkout-sessions/:tourId" , authController.protect ,payController.paymentTour)
 
 module.exports = router

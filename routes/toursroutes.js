@@ -25,7 +25,6 @@ const {
     protect,
     restrictTo
 } = require("../controller/secure/AuthController")
-const { get } = require("./paymentRouts")
 
 // Nested Routes 
 // /tours/a51aa54fgsrg1323/reviews
